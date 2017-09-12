@@ -3,9 +3,9 @@
 # uninstall-user.sh
 
 BINDIR="/home/steam/bin"
-DATADIR="/home/steam/.local/share/arkmanager"
+DATADIR="/home/steam/.local/share/dnlmanager"
 
-for f in "${BINDIR}/arkmanager" \
+for f in "${BINDIR}/dnlmanager" \
          "${DATADIR}/uninstall.sh"
 do
   if [ -f "$f" ]; then

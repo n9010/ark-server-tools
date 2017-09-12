@@ -46,18 +46,18 @@ tar
 ```
 
 If using CentOS 6 or earlier, or Debian 7 or earlier, you will need to compile a newer version of glibc.
-See https://github.com/FezVrasta/ark-server-tools/wiki/Install-of-required-versions-of-glibc-and-gcc-on-RHEL-CentOS
+See https://github.com/FezVrasta/dnl-server-tools/wiki/Install-of-required-versions-of-glibc-and-gcc-on-RHEL-CentOS
 
 To use DNL Server Tools, you will need to install **SteamCMD** following this guide:
 
 https://developer.valvesoftware.com/wiki/SteamCMD#Linux
 
-We assume you have created the `steam` user to store steamcmd and your ARK server.
+We assume you have created the `steam` user to store steamcmd and your dnl server.
 
 Requirements
 ~~~~~~~~~~~~
 
-To allow your ARK server to communicate with the outside you have to open some ports in your firewall:
+To allow your dnl server to communicate with the outside you have to open some ports in your firewall:
 
 ```sh
 iptables -I INPUT -p udp --dport 27016 -j ACCEPT
@@ -67,7 +67,7 @@ iptables -I INPUT -p tcp --dport 7778 -j ACCEPT
 iptables -I INPUT -p tcp --dport 32330 -j ACCEPT
 ```
 
-NB: Change the ports according to the ones set in your `arkmanager.cfg` file.
+NB: Change the ports according to the ones set in your `dnlmanager.cfg` file.
 
 Install DNL Server Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,9 +79,9 @@ curl -sL http://git.io/vtf5N | sudo bash -s steam
 
 NB: You may want to change the `bash -s` parameter to fit your steam user if different from `steam`.
 
-This will copy the `arkmanager` script and its daemon to the proper directories and will create an empty log directory in `/var/log` for DNL Server Tools.
+This will copy the `dnlmanager` script and its daemon to the proper directories and will create an empty log directory in `/var/log` for DNL Server Tools.
 
-To instead perform a user-install of ARK Server Tools as an unprivileged user, run this command:
+To instead perform a user-install of dnl Server Tools as an unprivileged user, run this command:
 
 [source,sh]
 curl -sL http://git.io/vtf5N | bash -s -- --me
@@ -89,35 +89,35 @@ curl -sL http://git.io/vtf5N | bash -s -- --me
 Configuration
 ~~~~~~~~~~~~~
 
-Stored in `/etc/arkmanager/arkmanager.cfg` and `/etc/arkmanager/instances/<instancename>.cfg` you can find the variables needed to start the server, like the port numbers, the system environment variables and so on.
+Stored in `/etc/dnlmanager/dnlmanager.cfg` and `/etc/dnlmanager/instances/<instancename>.cfg` you can find the variables needed to start the server, like the port numbers, the system environment variables and so on.
 
 You will need to modify these files with any options you wish to give to the server, and any
 paths that are non-standard in your environment (e.g. one common one is the path to the appinfo cache).
 
 See <<Configuration files>> for options.
 
-Also, in these files, you can specify any parameter you want to add to the startup command of ARK server.
-These parameters must be prefixed by the `ark_` string, some example could be:
+Also, in these files, you can specify any parameter you want to add to the startup command of dnl server.
+These parameters must be prefixed by the `dnl_` string, some example could be:
 
 [source,sh]
-ark_SessionName="My ARK server"
-ark_MaxPlayers=50
-ark_ServerPVE=False
-ark_DifficultyOffset=1
+dnl_SessionName="My dnl server"
+dnl_MaxPlayers=50
+dnl_ServerPVE=False
+dnl_DifficultyOffset=1
 
-Your session name may not contain special characters (eg. `!![EU]!! Aw&some ARK`) as it could break the startup command.
-In this case you may want to comment out the `ark_SessionName` variable and define it inside your **GameUserSettings.ini** file instead.
+Your session name may not contain special characters (eg. `!![EU]!! Aw&some dnl`) as it could break the startup command.
+In this case you may want to comment out the `dnl_SessionName` variable and define it inside your **GameUserSettings.ini** file instead.
 
-To specify an option without an argument (e.g. `bRawSockets`), specify an empty argument (e.g. `ark_bRawSockets=""`).
+To specify an option without an argument (e.g. `bRawSockets`), specify an empty argument (e.g. `dnl_bRawSockets=""`).
 
-To specify a dash-option without an argument (e.g. `-log`), add the option="" prefixed with `arkflag_` (e.g. `arkflag_log=""`).
+To specify a dash-option without an argument (e.g. `-log`), add the option="" prefixed with `dnlflag_` (e.g. `dnlflag_log=""`).
 
-To specify a dash-option with an argument (e.g. `-StructureDestructionTag=DestroySwampSnowStructures`), add the option=value prefixed with `arkopt_` (e.g. `arkopt_StructureDestructionTag=DestroySwampSnowStructures`).
+To specify a dash-option with an argument (e.g. `-StructureDestructionTag=DestroySwampSnowStructures`), add the option=value prefixed with `dnlopt_` (e.g. `dnlopt_StructureDestructionTag=DestroySwampSnowStructures`).
 
-You can override or add variables for a specific system user creating a file called `.arkmanager.cfg` in the home directory of the system user.
+You can override or add variables for a specific system user creating a file called `.dnlmanager.cfg` in the home directory of the system user.
 
 Each server instance must have its own set of ports.
-These ports are specified using the `ark_Port`, `ark_QueryPort` and `ark_RCONPort` settings in the instance configuration.
+These ports are specified using the `dnl_Port`, `dnl_QueryPort` and `dnl_RCONPort` settings in the instance configuration.
 If the QueryPort or Port settings are shared between multiple instances, then the server will often either crash or hang
 without being able to be queried.
 If the RCONPort setting is shared between multiple instances, the server will hang at 0/0 players.
@@ -130,12 +130,12 @@ Install DNL Server
 To install DNL Server just run this command as normal user:
 
 [source,sh]
-arkmanager install
+dnlmanager install
 
 Usage
 -----
 
-`arkmanager [Global Options] <command> [Command Options] [Command Args] [Instances]`
+`dnlmanager [Global Options] <command> [Command Options] [Command Args] [Instances]`
 
 Global Options
 ~~~~~~~~~~~~~~
@@ -145,7 +145,7 @@ Global Options
     Prints some help on using the command
 
 `--version`::
-    Prints the arkmanager version
+    Prints the dnlmanager version
 
 Common Options
 ~~~~~~~~~~~~~~
@@ -165,10 +165,10 @@ Instanceless commands
 
 [horizontal]
 `upgrade-tools`::
-    Upgrades the ARK server tools to the latest version
+    Upgrades the dnl server tools to the latest version
 
 `uninstall-tools`::
-    Uninstalls the ARK server tools
+    Uninstalls the dnl server tools
 
 `list-instances`::
     Lists the available instances
@@ -227,10 +227,10 @@ instances.
 
 `install`::
     Downloads and installs (or validates an existing install) of
-    the ARK server
+    the dnl server
 
 `update`::
-    Updates an install of the ARK server (or installs it if it's
+    Updates an install of the dnl server (or installs it if it's
     not already installed)
 
     `--force`;;
@@ -248,7 +248,7 @@ instances.
         Only updates the server when nobody is connected
 
     `--validate`;;
-        Re-validates the ARK server install
+        Re-validates the dnl server install
 
     `--saveworld`;;
         Saves the world using `saveworld` - usually not
@@ -274,11 +274,11 @@ instances.
     the `--warn` option
 
 `checkupdate`::
-    Checks if an ARK server update is available
+    Checks if an dnl server update is available
 
 `checkmodupdate`::
     Checks if any mods need updating on the server
-    
+
     `--revstatus`;;
         Reverses the exit code, and adds extra codes for failures
 
@@ -286,7 +286,7 @@ instances.
         - 0: An update is available, or workshop files are missing
         - 1: No update is available
         - 2: One or more mods is missing from the workshop
-    
+
     Reversed status codes;;
         - 0: No update is avaibale
         - 1: An update is available
@@ -318,7 +318,7 @@ instances.
 
 `enablemod <modnum>`::
 `enablemod <modnum>=<modtype>`::
-    Enables the `arkmod_<modnum>` setting in the instance config.
+    Enables the `dnlmod_<modnum>` setting in the instance config.
     modtype defaults to `game`.
     Mod types:
 
@@ -348,7 +348,7 @@ instances.
     response
 
 `status`::
-    Prints the status of the ARK server
+    Prints the status of the dnl server
 
 `install-cronjob <command>`::
     Installs a cron job that executes the specified command.
@@ -396,16 +396,16 @@ Configuration files
 Global configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-Global configuration is stored in `/etc/arkmanager/arkmanager.cfg`
-and/or `~/.arkmanager.cfg`.
+Global configuration is stored in `/etc/dnlmanager/dnlmanager.cfg`
+and/or `~/.dnlmanager.cfg`.
 
 The following options cannot be overridden in the instance config
 files:
 
 [horizontal]
-`arkstChannel`::
+`dnlstChannel`::
     Specifies the release channel (git branch) to use when
-    upgrading the ARK server tools
+    upgrading the dnl server tools
 
 `install_bindir`::
 `install_libexecdir`::
@@ -421,7 +421,7 @@ files:
 
 `steamcmd_user`::
     The user under which the tools should be run.  Set to `--me`
-    in `~/.arkmanager.cfg` in the case of a user-install
+    in `~/.dnlmanager.cfg` in the case of a user-install
 
 The following options can be overridden on a per-instance basis:
 
@@ -434,7 +434,7 @@ The following options can be overridden on a per-instance basis:
 
 `steamcmd_appinfocache`::
     The path to the Steam appinfo cache file.
-    Most systems will have this in `$HOME/Steam/appcache/appinfo.vdf`, 
+    Most systems will have this in `$HOME/Steam/appcache/appinfo.vdf`,
     but some systems have this instead in `$HOME/.steam/appcache/appinfo.vdf`.
     You will need to modify this setting if this is the case.
 
@@ -457,49 +457,49 @@ The following options can be overridden on a per-instance basis:
     Some SteamCMD installations use `SteamApps` as the steamapps directory
     instead of `steamapps`
 
-`arkserverexec`::
-    The relative path within an ARK server install where the
-    ARK server executable can be found.
-    For the standard ARK server, this should be `ShooterGame/Binaries/Linux/ShooterGameServer`
+`dnlserverexec`::
+    The relative path within an dnl server install where the
+    dnl server executable can be found.
+    For the standard dnl server, this should be `ShooterGame/Binaries/Linux/ShooterGameServer`
 
-`arkbackupdir`::
+`dnlbackupdir`::
     The directory in which to store backups.  Can be overridden in
     the instance config.
 
-`arkwarnminutes`::
+`dnlwarnminutes`::
     The number of minutes over which the shutdown and update warnings
     should be run
 
-`arkautorestartfile`::
-    The relative path within an ARK server install to place the
+`dnlautorestartfile`::
+    The relative path within an dnl server install to place the
     autorestart lock file
 
-`arkAlwaysRestartOnCrash`::
+`dnlAlwaysRestartOnCrash`::
     Set to `true` to enable automatically restarting even when the
     server has not become ready for player connections.
     Be aware that this may cause the server to enter an endless
     crash-restart loop if the cause of the crash is not resolved.
 
-`arkAutoUpdateOnStart`::
+`dnlAutoUpdateOnStart`::
     Set to `true` to enable updating before server startup
 
-`arkBackupPreUpdate`::
+`dnlBackupPreUpdate`::
     Set to `true` to enable automatic backups before updating
 
-`arkStagingDir`::
+`dnlStagingDir`::
     Sets the staging directory in order to download updates
     before shutting down the server
 
-`arkMaxBackupSizeMB`::
+`dnlMaxBackupSizeMB`::
     Limits the size of the stored backups
 
-`arkPriorityBoost`::
-    Attempts to boost the priority of the ARK server.
+`dnlPriorityBoost`::
+    Attempts to boost the priority of the dnl server.
     Negative values give a higher priority, and positive values give a lower priority.
     Requires `sudo` and `renice`
 
-`arkCpuAffinity`::
-    Attempts to set the CPU affinity of the ARK server.
+`dnlCpuAffinity`::
+    Attempts to set the CPU affinity of the dnl server.
     Setting is a comma-delimited list of processor indices on which the server should run.
     Requires `sudo` and `taskset`
 
@@ -542,17 +542,17 @@ The following options can be overridden on a per-instance basis:
     Specifies where to store log files
 
 `appid`::
-    The Steam AppID of the ARK server
+    The Steam AppID of the dnl server
 
 `mod_appid`::
-    The Steam AppID of the ARK client (used for downloading mods)
+    The Steam AppID of the dnl client (used for downloading mods)
 
 `mod_branch`::
     The Mod branch (`Windows` or `Linux`) to use.  Virtually all mods
-    use the `Windows` branch for the ARK server, and the `Linux`
+    use the `Windows` branch for the dnl server, and the `Linux`
     branch almost always crashes the server
 
-ARK server options:
+dnl server options:
 
 [horizontal]
 `serverMap`::
@@ -562,21 +562,21 @@ ARK server options:
     Uses the `-MapModID=<modid>?...` option to specify the server map
     mod ID
 
-`ark_<optname>="<optval>"`::
+`dnl_<optname>="<optval>"`::
     Specifies the options to use in the `Map?Option=Val?...` option
     string passed to the server
 
-`ark_<optname>=""`::
+`dnl_<optname>=""`::
     Specifies an option without a value - `Map?Option?...`
 
-`arkflag_<optname>=<anything>`::
+`dnlflag_<optname>=<anything>`::
     Specifies a dash-option without a value (i.e. flag) - e.g.
-    `arkflag_DisableDeathSpectator=true` adds the
+    `dnlflag_DisableDeathSpectator=true` adds the
     `-DisableDeathSpectator` flag
 
-`arkopt_<optname>="<optval>"`::
+`dnlopt_<optname>="<optval>"`::
     Specifies a dash-option with a value - e.g.
-    `arkopt_StructureDestructionTag=DestroySwampSnowStructures` adds
+    `dnlopt_StructureDestructionTag=DestroySwampSnowStructures` adds
     the `-StructureDestructionTag=DestroySwampSnowStructures`
     option.
 
@@ -584,14 +584,14 @@ Instance config files
 ~~~~~~~~~~~~~~~~~~~~~
 
 Instance config files are stored under
-`/etc/arkmanager/instances/<instancename>.cfg`,
-`~/.config/arkmanager/instances/<instancename>.cfg`
+`/etc/dnlmanager/instances/<instancename>.cfg`,
+`~/.config/dnlmanager/instances/<instancename>.cfg`
 or as specified in the `configfile_<instancename>` options in
 the global config.
 
 [horizontal]
-`arkserverroot`::
-    The directory under which the ARK server is installed
+`dnlserverroot`::
+    The directory under which the dnl server is installed
 
 `serverMap`::
     The map the server should use
@@ -600,32 +600,32 @@ the global config.
     Uses the `-MapModID=<modid>?...` option to specify the server map
     mod ID
 
-`ark_<optname>="<optval>"`::
+`dnl_<optname>="<optval>"`::
     Specifies the options to use in the `Map?Option=Val?...` option
     string passed to the server
 
-`ark_<optname>=""`::
+`dnl_<optname>=""`::
     Specifies an option without a value - `Map?Option?...`
 
-`arkflag_<optname>=<anything>`::
+`dnlflag_<optname>=<anything>`::
     Specifies a dash-option without a value (i.e. flag) - e.g.
-    `arkflag_DisableDeathSpectator=true` adds the
+    `dnlflag_DisableDeathSpectator=true` adds the
     `-DisableDeathSpectator` flag
 
-`arkopt_<optname>="<optval>"`::
+`dnlopt_<optname>="<optval>"`::
     Specifies a dash-option with a value - e.g.
-    `arkopt_StructureDestructionTag=DestroySwampSnowStructures` adds
+    `dnlopt_StructureDestructionTag=DestroySwampSnowStructures` adds
     the `-StructureDestructionTag=DestroySwampSnowStructures`
     option.
 
-`arkmod_<modnum>=<modtype>`::
+`dnlmod_<modnum>=<modtype>`::
     Specifies a mod that can be enabled or disabled using
     `enablemod` and `disablemod`.  Note that mod ids specified
     using these options are in addition to those specified directly
-    in the `ark_GameModIds` option, and override those specified in the
-    `ark_MapModId`, `serverMapMod` and `ark_TotalConversionMod`
+    in the `dnl_GameModIds` option, and override those specified in the
+    `dnl_MapModId`, `serverMapMod` and `dnl_TotalConversionMod`
     options.  Options are processed in the order they are specified
-    in the instance config file, and `arkmod_*` options in the
+    in the instance config file, and `dnlmod_*` options in the
     common config file are not applied.
     Mod types:
 
@@ -642,48 +642,46 @@ the global config.
     `disabled`;;
         A disabled mod
 
-Common ARK options
+Common dnl options
 ~~~~~~~~~~~~~~~~~~
 
 [horizontal]
-`ark_TotalConversionId=<modid>`::
+`dnl_TotalConversionId=<modid>`::
     Specifies the Total Conversion to use
 
-`ark_GameModIds=<modid>,<modid>,...`::
+`dnl_GameModIds=<modid>,<modid>,...`::
     Specifies the Mod IDs to use
 
-`ark_SessionName="<sessionname>"`::
+`dnl_SessionName="<sessionname>"`::
     The name under which the server should announce itself
 
-`ark_RCONEnabled="True"`::
+`dnl_RCONEnabled="True"`::
     Enabled RCON
 
-`ark_RCONPort=<portnum>`::
+`dnl_RCONPort=<portnum>`::
     The port on which the server listens for RCON commands.  Must be unique on the host.
 
-`ark_Port=<portnum>`::
+`dnl_Port=<portnum>`::
     The port on which the server listens for client connections.  Must be unique on the host.
 
-`ark_QueryPort=<portnum>`::
+`dnl_QueryPort=<portnum>`::
     The port on which the server listens for queries.  Must be unique on the host.
 
-`ark_ServerPassword="<password>"`::
+`dnl_ServerPassword="<password>"`::
     Specifies the password needed to connect to the server
 
-`ark_ServerAdminPassword="<password>"`::
+`dnl_ServerAdminPassword="<password>"`::
     Specifies the server admin password, which is also the RCON
     password.  Use of this option is discouraged - please store
     the password in the GameUserSettings.ini file instead.
 
-`ark_MaxPlayers=<numplayers>`::
+`dnl_MaxPlayers=<numplayers>`::
     The maximum number of players allowed to connect to the server
 
-`ark_AltSaveDirectoryName="<dirname>"`::
+`dnl_AltSaveDirectoryName="<dirname>"`::
     Alternative directory under `ShooterGame/Saved` under which to
     save the world files.  If multiple instances run from the same directory, this
     must be unique between these instances.
 
-`arkflag_NoBattlEye=true`::
+`dnlflag_NoBattlEye=true`::
     Disables BattlEye
-
-

@@ -3,32 +3,32 @@
 # uninstall.sh
 
 BINDIR="/usr/bin"
-DATADIR="/usr/share/arkmanager"
-LIBEXECDIR="/usr/libexec/arkmanager"
+DATADIR="/usr/share/dnlmanager"
+LIBEXECDIR="/usr/libexec/dnlmanager"
 INITSCRIPT=
 
-if [ -f "/etc/rc.d/init.d/arkmanager" ]; then
-  INITSCRIPT="/etc/rc.d/init.d/arkmanager"
+if [ -f "/etc/rc.d/init.d/dnlmanager" ]; then
+  INITSCRIPT="/etc/rc.d/init.d/dnlmanager"
   if [ -f "/etc/rc.d/init.d/functions" ]; then
-    chkconfig arkmanager off
+    chkconfig dnlmanager off
   fi
-elif [ -f "/etc/init.d/arkmanager" ]; then
-  INITSCRIPT="/etc/init.d/arkmanager"
+elif [ -f "/etc/init.d/dnlmanager" ]; then
+  INITSCRIPT="/etc/init.d/dnlmanager"
   if [ -f "/lib/lsb/init-functions" ]; then
-    update-rc.d -f arkmanager remove
+    update-rc.d -f dnlmanager remove
   elif [ -f "/sbin/runscript" ]; then
-    rc-update del arkmanager default
+    rc-update del dnlmanager default
   fi
-elif [ -f "/etc/systemd/system/arkmanager.service" ]; then
-  INITSCRIPT="/etc/systemd/system/arkmanager.service"
-  systemctl disable arkmanager.service
+elif [ -f "/etc/systemd/system/dnlmanager.service" ]; then
+  INITSCRIPT="/etc/systemd/system/dnlmanager.service"
+  systemctl disable dnlmanager.service
 fi
 
 if [ -n "$INITSCRIPT" ]; then
   for f in "${INITSCRIPT}" \
-           "${BINDIR}/arkmanager" \
-           "${LIBEXECDIR}/arkmanager.init" \
-           "${LIBEXECDIR}/arkmanager-uninstall.sh"
+           "${BINDIR}/dnlmanager" \
+           "${LIBEXECDIR}/dnlmanager.init" \
+           "${LIBEXECDIR}/dnlmanager-uninstall.sh"
   do
     if [ -f "$f" ]; then
       rm "$f"
@@ -37,6 +37,6 @@ if [ -n "$INITSCRIPT" ]; then
 fi
 
 # remove bash_completion.d
-if [ -f "/etc/bash_completion.d/arkmanager" ]; then
-   rm "/etc/bash_completion.d/arkmanager"
+if [ -f "/etc/bash_completion.d/dnlmanager" ]; then
+   rm "/etc/bash_completion.d/dnlmanager"
 fi
