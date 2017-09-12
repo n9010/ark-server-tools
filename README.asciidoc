@@ -1,6 +1,6 @@
 = Dark and Light Linux Server Tools
 
-= This is a work in progress in the hopes that DNL comes to Linux
+= This is a work in progress in the hope that DNL comes to Linux
 
 This tool allows you to manage any DNL linux server without having to remember long commands.
 It provides a lot of features, to get the full list check the <<Usage>> section.
@@ -11,7 +11,7 @@ Installation
 Prerequisites
 ~~~~~~~~~~~~~
 
-ARK Server Tools requires certain packages be installed in order to function correctly.
+DNL Server Tools requires certain packages be installed in order to function correctly.
 
 If running under CentOS or RHEL, you will need the following packages installed:
 ```
@@ -48,7 +48,7 @@ tar
 If using CentOS 6 or earlier, or Debian 7 or earlier, you will need to compile a newer version of glibc.
 See https://github.com/FezVrasta/ark-server-tools/wiki/Install-of-required-versions-of-glibc-and-gcc-on-RHEL-CentOS
 
-To use ARK Server Tools, you will need to install **SteamCMD** following this guide:
+To use DNL Server Tools, you will need to install **SteamCMD** following this guide:
 
 https://developer.valvesoftware.com/wiki/SteamCMD#Linux
 
@@ -69,17 +69,17 @@ iptables -I INPUT -p tcp --dport 32330 -j ACCEPT
 
 NB: Change the ports according to the ones set in your `arkmanager.cfg` file.
 
-Install ARK Server Tools
+Install DNL Server Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To install ARK Server Tools run this command:
+To install DNL Server Tools run this command:
 
 [source,sh]
 curl -sL http://git.io/vtf5N | sudo bash -s steam
 
 NB: You may want to change the `bash -s` parameter to fit your steam user if different from `steam`.
 
-This will copy the `arkmanager` script and its daemon to the proper directories and will create an empty log directory in `/var/log` for ARK Server Tools.
+This will copy the `arkmanager` script and its daemon to the proper directories and will create an empty log directory in `/var/log` for DNL Server Tools.
 
 To instead perform a user-install of ARK Server Tools as an unprivileged user, run this command:
 
@@ -124,10 +124,10 @@ If the RCONPort setting is shared between multiple instances, the server will ha
 
 See <<Configuration files>> for more options.
 
-Install ARK Server
+Install DNL Server
 ~~~~~~~~~~~~~~~~~~
 
-To install ARK Server just run this command as normal user:
+To install DNL Server just run this command as normal user:
 
 [source,sh]
 arkmanager install
